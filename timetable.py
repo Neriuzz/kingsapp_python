@@ -26,22 +26,24 @@ def print_info(upto, show_all, username, password):
 
     # Get data and print to screen
     for i in range(upto - 1 if not show_all else 0, upto if not show_all else len(lectures)):
-        title = lectures[i].childNodes[0].childNodes[0].nodeValue
-        desc = lectures[i].childNodes[1].childNodes[0].nodeValue
-        start = parser.parse(lectures[i].childNodes[2].childNodes[0].nodeValue)
-        end = parser.parse(lectures[i].childNodes[3].childNodes[0].nodeValue)
+        try:
+            title = lectures[i].childNodes[0].childNodes[0].nodeValue
+            desc = lectures[i].childNodes[1].childNodes[0].nodeValue
+            start = parser.parse(lectures[i].childNodes[2].childNodes[0].nodeValue)
+            end = parser.parse(lectures[i].childNodes[3].childNodes[0].nodeValue)
+            if 'Prac' in title or 'SmG' in title:
+                teacher = 'None'
+                location_code = lectures[i].childNodes[4].childNodes[0].nodeValue    
+                location = lectures[i].childNodes[5].childNodes[0].nodeValue
+            else:    
+                teacher = lectures[i].childNodes[4].childNodes[0].nodeValue
+                location_code = lectures[i].childNodes[5].childNodes[0].nodeValue
+                location = lectures[i].childNodes[6].childNodes[0].nodeValue
 
-        if 'Prac' in title or 'SmG' in title:
-            teacher = 'None'
-            location_code = lectures[i].childNodes[4].childNodes[0].nodeValue    
-            location = lectures[i].childNodes[5].childNodes[0].nodeValue
-        else:    
-            teacher = lectures[i].childNodes[4].childNodes[0].nodeValue
-            location_code = lectures[i].childNodes[5].childNodes[0].nodeValue
-            location = lectures[i].childNodes[6].childNodes[0].nodeValue
-
-        date = '{}/{}/{}'.format(start.strftime('%d'), start.strftime('%m'), start.strftime('%Y'))
-        print('{}\n{}\nDate: {}\nTime: {} - {}\nTeacher(s): {}\nLocation Code: {}\nLocation: {}\n'.format(title, desc, date, format_date(start), format_date(end), teacher, location_code, location))
+            date = '{}/{}/{}'.format(start.strftime('%d'), start.strftime('%m'), start.strftime('%Y'))
+            print('{}\n{}\nDate: {}\nTime: {} - {}\nTeacher(s): {}\nLocation Code: {}\nLocation: {}\n'.format(title, desc, date, format_date(start), format_date(end), teacher, location_code, location))
+        except:
+            print('You only have {} lessons that day!'.format(len(lectures)))
 
 def make_calendar_payload(username, password, start, end):
 
@@ -89,8 +91,8 @@ def format_date(date):
 if __name__ == '__main__':
     show_all = False
     upto = 1
-    username = 'K1889934'
-    password = 'Jellyfish852!'
+    username = None
+    password = None
     for i in range(len(sys.argv)):
         arg = sys.argv[i]
         if arg == '-u':
