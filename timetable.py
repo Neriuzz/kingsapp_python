@@ -31,7 +31,7 @@ def print_info(upto, show_all, username, password):
             desc = lectures[i].childNodes[1].childNodes[0].nodeValue
             start = parser.parse(lectures[i].childNodes[2].childNodes[0].nodeValue)
             end = parser.parse(lectures[i].childNodes[3].childNodes[0].nodeValue)
-            if 'Prac' in title or 'SmG' in title:
+            if 'Prac' in title or 'SmG' in title or 'ClassTest' in title:
                 teacher = 'None'
                 location_code = lectures[i].childNodes[4].childNodes[0].nodeValue    
                 location = lectures[i].childNodes[5].childNodes[0].nodeValue
