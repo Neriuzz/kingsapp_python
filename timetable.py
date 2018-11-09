@@ -43,7 +43,7 @@ def print_info(upto, show_all, username, password):
             date = '{}/{}/{}'.format(start.strftime('%d'), start.strftime('%m'), start.strftime('%Y'))
             print('{}\n{}\nDate: {}\nTime: {} - {}\nTeacher(s): {}\nLocation Code: {}\nLocation: {}\n'.format(title, desc, date, format_date(start), format_date(end), teacher, location_code, location))
         except:
-            print('You only have {} lessons that day!'.format(len(lectures)))
+            print('You have {} lectures between today and tomorrow!'.format(len(lectures)))
 
 def make_calendar_payload(username, password, start, end):
 
